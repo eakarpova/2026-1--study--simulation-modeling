@@ -1,0 +1,125 @@
+using DrWatson
+@quickactivate "../../project"
+using DifferentialEquations
+using SimpleDiffEq
+using Tables
+using DataFrames
+using StatsPlots
+using LaTeXStrings
+using Plots
+using BenchmarkTools
+
+script_name = splitext(basename(PROGRAM_FILE))[1]
+mkpath(plotsdir(script_name))
+mkpath(datadir(script_name))
+
+function sir_ode!(du, u, p, t)
+    (S, I, R) = u
+    (β, c, γ) = p
+    N = S + I + R
+    @inbounds begin
+        du[1] = -β * c * I / N * S
+        du[2] =  β * c * I / N * S - γ * I
+        du[3] =  γ * I
+    end
+    nothing
+end
+
+# Параметры по умолчанию
+δt = 0.1
+tmax = 40.0
+tspan = (0.0, tmax)
+u0 = [990.0, 10.0, 0.0]
+p_base = [0.05, 10.0, 0.25]
+
+println("="^60)
+println("ПАРАМЕТРИЧЕСКОЕ ИССЛЕДОВАНИЕ МОДЕЛИ SIR")
+println("="^60)
+
+# ------------------------------------------------------------
+# 1. Исследование влияния β (вероятность заражения)
+# ------------------------------------------------------------
+println("\n--- Влияние β (вероятность заражения) ---")
+β_values = [0.03, 0.05, 0.07, 0.1]
+results_β = []
+
+for β in β_values
+    p_test = [β, p_base[2], p_base[3]]
+    prob = ODEProblem(sir_ode!, u0, tspan, p_test)
+    sol = solve(prob, dt = δt)
+    
+    I_max = maximum(sol[2,:])
+    R_end = sol[3,end]
+    R0_val = (p_test[2] * p_test[1]) / p_test[3]
+    
+    push!(results_β, (β=β, R0=R0_val, I_max=I_max, R_end=R_end))
+    println("β = $β → R0 = $(round(R0_val, digits=2)), пик I = $(round(I_max, digits=1)), переболело = $(round(R_end, digits=1))")
+end
+
+df_β = DataFrame(results_β)
+
+# График зависимости пика от β
+p_β = plot(df_β.β, df_β.I_max, 
+           seriestype=:scatter, label="Численный расчёт",
+           xlabel="β (вероятность заражения)",
+           ylabel="Максимальное число заражённых",
+           title="Зависимость пика эпидемии от β",
+           markersize=8, color=:red, legend=:topright)
+savefig(p_β, plotsdir(script_name, "sir_beta_scan.png"))
+
+# ------------------------------------------------------------
+# 2. Исследование влияния γ (скорость выздоровления)
+# ------------------------------------------------------------
+println("\n--- Влияние γ (скорость выздоровления) ---")
+γ_values = [0.15, 0.2, 0.25, 0.3, 0.35]
+results_γ = []
+
+for γ in γ_values
+    p_test = [p_base[1], p_base[2], γ]
+    prob = ODEProblem(sir_ode!, u0, tspan, p_test)
+    sol = solve(prob, dt = δt)
+    
+    I_max = maximum(sol[2,:])
+    R_end = sol[3,end]
+    R0_val = (p_test[2] * p_test[1]) / p_test[3]
+    
+    push!(results_γ, (γ=γ, R0=R0_val, I_max=I_max, R_end=R_end))
+    println("γ = $γ → R0 = $(round(R0_val, digits=2)), пик I = $(round(I_max, digits=1)), переболело = $(round(R_end, digits=1))")
+end
+
+df_γ = DataFrame(results_γ)
+
+p_γ = plot(df_γ.γ, df_γ.I_max,
+           seriestype=:scatter, label="Численный расчёт",
+           xlabel="γ (скорость выздоровления)",
+           ylabel="Максимальное число заражённых",
+           title="Зависимость пика эпидемии от γ",
+           markersize=8, color=:blue, legend=:topright)
+savefig(p_γ, plotsdir(script_name, "sir_gamma_scan.png"))
+
+# ------------------------------------------------------------
+# 3. Тепловая карта (β vs γ)
+# ------------------------------------------------------------
+println("\n--- Двумерное сканирование (β × γ) ---")
+β_grid = [0.03, 0.05, 0.07, 0.09]
+γ_grid = [0.15, 0.2, 0.25, 0.3, 0.35]
+heat_data = zeros(length(β_grid), length(γ_grid))
+
+for (i, β) in enumerate(β_grid)
+    for (j, γ) in enumerate(γ_grid)
+        p_test = [β, p_base[2], γ]
+        prob = ODEProblem(sir_ode!, u0, tspan, p_test)
+        sol = solve(prob, dt = δt)
+        heat_data[i, j] = maximum(sol[2,:])
+    end
+end
+
+p_heat = heatmap(γ_grid, β_grid, heat_data,
+                 xlabel="γ", ylabel="β",
+                 title="Тепловая карта: пик I(β, γ)",
+                 color=:viridis)
+savefig(p_heat, plotsdir(script_name, "sir_heatmap.png"))
+
+# ------------------------------------------------------------
+println("\n✅ Параметрическое исследование SIR завершено!")
+println("Графики сохранены в: plots/$(script_name)/")
