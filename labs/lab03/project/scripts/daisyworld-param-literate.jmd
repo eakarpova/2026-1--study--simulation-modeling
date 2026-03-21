@@ -1,0 +1,33 @@
+# # Параметрическое исследование: визуализация
+#
+# **Цель:** Исследовать влияние параметров (максимальный возраст, начальная доля белых маргариток) на динамику системы.
+#
+# ## Параметры
+# - `max_age`: 25, 40
+# - `init_white`: 0.2, 0.8
+#
+# ## Результаты
+# Для каждой комбинации параметров сохранены три состояния: t=0, t=5, t=40.
+#
+# - `max_age=25, init_white=0.2`:
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step01.png)
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step05.png)
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step40.png)
+#
+# - `max_age=40, init_white=0.2`:
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step01.png)
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step05.png)
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step40.png)
+#
+# - `max_age=25, init_white=0.8`:
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step01.png)
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step05.png)
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step40.png)
+#
+# - `max_age=40, init_white=0.8`:
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step01.png)
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step05.png)
+#   ![](../project/plots/daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step40.png)
+#
+# ## Вывод
+# Параметры влияют на скорость установления равновесия, но саморегуляция сохраняется.

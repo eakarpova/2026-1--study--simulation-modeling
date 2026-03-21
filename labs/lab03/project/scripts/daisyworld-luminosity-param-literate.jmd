@@ -1,0 +1,24 @@
+# # Параметрическое исследование: динамика при изменении светимости
+#
+# **Цель:** Исследовать, как параметры модели влияют на способность системы регулировать температуру.
+#
+# ## Параметры
+# - `max_age`: 25, 40
+# - `init_white`: 0.2, 0.8
+# - `scenario`: ramp
+#
+# ## Результаты
+# - `max_age=25, init_white=0.2`:
+#   ![](../project/plots/daisy-luminosity_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=25_scenario=ramp_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png)
+#
+# - `max_age=40, init_white=0.2`:
+#   ![](../project/plots/daisy-luminosity_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=40_scenario=ramp_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png)
+#
+# - `max_age=25, init_white=0.8`:
+#   ![](../project/plots/daisy-luminosity_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=25_scenario=ramp_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png)
+#
+# - `max_age=40, init_white=0.8`:
+#   ![](../project/plots/daisy-luminosity_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=40_scenario=ramp_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png)
+#
+# ## Вывод
+# Во всех случаях система компенсирует изменение светимости, поддерживая температуру в пригодном для жизни диапазоне.

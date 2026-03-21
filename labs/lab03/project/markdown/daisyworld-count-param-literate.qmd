@@ -1,0 +1,24 @@
+# Параметрическое исследование: численность маргариток
+
+**Цель:** Исследовать, как параметры модели влияют на динамику численности.
+
+## Параметры
+- `max_age`: 25, 40
+- `init_white`: 0.2, 0.8
+
+## Результаты
+- `max_age=25, init_white=0.2`:
+  ![](../project/plots/daisy-count_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png)
+
+- `max_age=40, init_white=0.2`:
+  ![](../project/plots/daisy-count_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png)
+
+- `max_age=25, init_white=0.8`:
+  ![](../project/plots/daisy-count_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png)
+
+- `max_age=40, init_white=0.8`:
+  ![](../project/plots/daisy-count_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png)
+
+## Вывод
+Изменение `max_age` и `init_white` влияет на амплитуду и период колебаний, но система остаётся устойчивой.
+

@@ -1,0 +1,28 @@
+using DrWatson
+@quickactivate "project"
+using Agents, DataFrames, Plots, CairoMakie
+
+include(srcdir("daisyworld.jl"))
+
+model = daisyworld()
+
+daisycolor(a::Daisy) = a.breed
+
+plotkwargs = (
+    agent_color = daisycolor,
+    agent_size = 20,
+    agent_marker = '✩',
+    heatarray = :temperature,
+    heatkwargs = (colorrange = (-20, 60),)
+)
+
+plt1, _ = abmplot(model; plotkwargs...)
+step!(model, 5)
+plt2, _ = abmplot(model; plotkwargs...)
+step!(model, 40)
+plt3, _ = abmplot(model; plotkwargs...)
+
+mkpath("plots")
+save("plots/daisy_step001.png", plt1)
+save("plots/daisy_step005.png", plt2)
+save("plots/daisy_step040.png", plt3)
